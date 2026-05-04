@@ -14,7 +14,60 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      leads: {
+        Row: {
+          campos_extras: Json
+          created_at: string
+          email: string | null
+          empresa: string | null
+          id: string
+          nome: string
+          observacoes: string | null
+          origem: string | null
+          score: number
+          status: Database["public"]["Enums"]["lead_status"]
+          telefone: string
+          tentativas: number
+          ultima_tentativa: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          campos_extras?: Json
+          created_at?: string
+          email?: string | null
+          empresa?: string | null
+          id?: string
+          nome: string
+          observacoes?: string | null
+          origem?: string | null
+          score?: number
+          status?: Database["public"]["Enums"]["lead_status"]
+          telefone: string
+          tentativas?: number
+          ultima_tentativa?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          campos_extras?: Json
+          created_at?: string
+          email?: string | null
+          empresa?: string | null
+          id?: string
+          nome?: string
+          observacoes?: string | null
+          origem?: string | null
+          score?: number
+          status?: Database["public"]["Enums"]["lead_status"]
+          telefone?: string
+          tentativas?: number
+          ultima_tentativa?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +76,13 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      lead_status:
+        | "novo"
+        | "contatado"
+        | "qualificado"
+        | "nao_qualificado"
+        | "nao_atendeu"
+        | "caixa_postal"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +209,15 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      lead_status: [
+        "novo",
+        "contatado",
+        "qualificado",
+        "nao_qualificado",
+        "nao_atendeu",
+        "caixa_postal",
+      ],
+    },
   },
 } as const
