@@ -2,6 +2,7 @@ import { Outlet } from "@tanstack/react-router";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
 import { Badge } from "@/components/ui/badge";
+import { Toaster } from "@/components/ui/sonner";
 import { Wifi } from "lucide-react";
 
 export function AppLayout() {
@@ -40,6 +41,7 @@ export function AppLayout() {
           <main className="flex-1 overflow-auto p-6">
             <Outlet />
           </main>
+          <Toaster richColors position="top-right" />
         </div>
       </div>
     </SidebarProvider>
