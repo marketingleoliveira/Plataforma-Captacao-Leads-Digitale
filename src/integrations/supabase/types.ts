@@ -14,6 +14,108 @@ export type Database = {
   }
   public: {
     Tables: {
+      call_queue: {
+        Row: {
+          call_id: string | null
+          campaign_id: string
+          created_at: string
+          duracao_segundos: number | null
+          finalizada_em: string | null
+          id: string
+          iniciada_em: string | null
+          lead_id: string
+          ordem: number
+          resultado: string | null
+          status: Database["public"]["Enums"]["queue_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          call_id?: string | null
+          campaign_id: string
+          created_at?: string
+          duracao_segundos?: number | null
+          finalizada_em?: string | null
+          id?: string
+          iniciada_em?: string | null
+          lead_id: string
+          ordem?: number
+          resultado?: string | null
+          status?: Database["public"]["Enums"]["queue_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          call_id?: string | null
+          campaign_id?: string
+          created_at?: string
+          duracao_segundos?: number | null
+          finalizada_em?: string | null
+          id?: string
+          iniciada_em?: string | null
+          lead_id?: string
+          ordem?: number
+          resultado?: string | null
+          status?: Database["public"]["Enums"]["queue_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "call_queue_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "call_queue_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaigns: {
+        Row: {
+          created_at: string
+          finalizada_em: string | null
+          id: string
+          iniciada_em: string | null
+          nome: string
+          status: Database["public"]["Enums"]["campaign_status"]
+          total_concluidos: number
+          total_leads: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          finalizada_em?: string | null
+          id?: string
+          iniciada_em?: string | null
+          nome: string
+          status?: Database["public"]["Enums"]["campaign_status"]
+          total_concluidos?: number
+          total_leads?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          finalizada_em?: string | null
+          id?: string
+          iniciada_em?: string | null
+          nome?: string
+          status?: Database["public"]["Enums"]["campaign_status"]
+          total_concluidos?: number
+          total_leads?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           campos_extras: Json
@@ -68,6 +170,42 @@ export type Database = {
         }
         Relationships: []
       }
+      pbx_config: {
+        Row: {
+          client_id: string
+          client_secret: string
+          created_at: string
+          extension: string
+          id: string
+          pbx_url: string
+          updated_at: string
+          user_id: string
+          webhook_secret: string
+        }
+        Insert: {
+          client_id: string
+          client_secret: string
+          created_at?: string
+          extension: string
+          id?: string
+          pbx_url: string
+          updated_at?: string
+          user_id: string
+          webhook_secret?: string
+        }
+        Update: {
+          client_id?: string
+          client_secret?: string
+          created_at?: string
+          extension?: string
+          id?: string
+          pbx_url?: string
+          updated_at?: string
+          user_id?: string
+          webhook_secret?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -76,12 +214,27 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      campaign_status:
+        | "rascunho"
+        | "em_andamento"
+        | "pausada"
+        | "concluida"
+        | "cancelada"
       lead_status:
         | "novo"
         | "contatado"
         | "qualificado"
         | "nao_qualificado"
         | "nao_atendeu"
+        | "caixa_postal"
+      queue_status:
+        | "pendente"
+        | "discando"
+        | "em_chamada"
+        | "concluido"
+        | "falhou"
+        | "sem_resposta"
+        | "ocupado"
         | "caixa_postal"
     }
     CompositeTypes: {
@@ -210,12 +363,29 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      campaign_status: [
+        "rascunho",
+        "em_andamento",
+        "pausada",
+        "concluida",
+        "cancelada",
+      ],
       lead_status: [
         "novo",
         "contatado",
         "qualificado",
         "nao_qualificado",
         "nao_atendeu",
+        "caixa_postal",
+      ],
+      queue_status: [
+        "pendente",
+        "discando",
+        "em_chamada",
+        "concluido",
+        "falhou",
+        "sem_resposta",
+        "ocupado",
         "caixa_postal",
       ],
     },

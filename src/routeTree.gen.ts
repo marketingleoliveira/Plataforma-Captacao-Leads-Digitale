@@ -16,6 +16,7 @@ import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AgenteRouteImport } from './routes/agente'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublic3cxWebhookRouteImport } from './routes/api/public/3cx-webhook'
 
 const RelatoriosRoute = RelatoriosRouteImport.update({
   id: '/relatorios',
@@ -52,6 +53,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublic3cxWebhookRoute = ApiPublic3cxWebhookRouteImport.update({
+  id: '/api/public/3cx-webhook',
+  path: '/api/public/3cx-webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +67,7 @@ export interface FileRoutesByFullPath {
   '/discagem': typeof DiscagemRoute
   '/leads': typeof LeadsRoute
   '/relatorios': typeof RelatoriosRoute
+  '/api/public/3cx-webhook': typeof ApiPublic3cxWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +77,7 @@ export interface FileRoutesByTo {
   '/discagem': typeof DiscagemRoute
   '/leads': typeof LeadsRoute
   '/relatorios': typeof RelatoriosRoute
+  '/api/public/3cx-webhook': typeof ApiPublic3cxWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,6 +88,7 @@ export interface FileRoutesById {
   '/discagem': typeof DiscagemRoute
   '/leads': typeof LeadsRoute
   '/relatorios': typeof RelatoriosRoute
+  '/api/public/3cx-webhook': typeof ApiPublic3cxWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,6 +100,7 @@ export interface FileRouteTypes {
     | '/discagem'
     | '/leads'
     | '/relatorios'
+    | '/api/public/3cx-webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +110,7 @@ export interface FileRouteTypes {
     | '/discagem'
     | '/leads'
     | '/relatorios'
+    | '/api/public/3cx-webhook'
   id:
     | '__root__'
     | '/'
@@ -109,6 +120,7 @@ export interface FileRouteTypes {
     | '/discagem'
     | '/leads'
     | '/relatorios'
+    | '/api/public/3cx-webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -119,6 +131,7 @@ export interface RootRouteChildren {
   DiscagemRoute: typeof DiscagemRoute
   LeadsRoute: typeof LeadsRoute
   RelatoriosRoute: typeof RelatoriosRoute
+  ApiPublic3cxWebhookRoute: typeof ApiPublic3cxWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -172,6 +185,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/3cx-webhook': {
+      id: '/api/public/3cx-webhook'
+      path: '/api/public/3cx-webhook'
+      fullPath: '/api/public/3cx-webhook'
+      preLoaderRoute: typeof ApiPublic3cxWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -183,16 +203,8 @@ const rootRouteChildren: RootRouteChildren = {
   DiscagemRoute: DiscagemRoute,
   LeadsRoute: LeadsRoute,
   RelatoriosRoute: RelatoriosRoute,
+  ApiPublic3cxWebhookRoute: ApiPublic3cxWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
